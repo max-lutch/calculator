@@ -2,7 +2,6 @@ package calculator_test
 
 import (
 	"calculator"
-	"fmt"
 	"testing"
 )
 
