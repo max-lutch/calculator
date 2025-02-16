@@ -1,7 +1,9 @@
 package calculator_test
 
 import (
-	"calculator"
+	"calculator" // This should match the folder name where calculator.go is located
+	"errors"
+	"math"
 	"testing"
 )
 
@@ -65,6 +67,10 @@ func TestMultiply(t *testing.T) {
 	}
 }
 
+func closeEnough(a, b, tolerance float64) bool {
+	return math.Abs(a-b) <= tolerance
+}
+
 func TestDivide(t *testing.T) {
 	t.Parallel()
 	type testCase struct {
@@ -92,6 +98,35 @@ func TestDivideInvalid(t *testing.T) {
 	t.Parallel()
 	_, err := calculator.Divide(1, 0)
 	if err == nil {
-		t.Error("want error for invalid input, got nil")
+		t.Errorf("Divide error for invalid input, got nil")
+	}
+}
+
+func Sqrt(a float64) (float64, error) {
+	if a < 0 {
+		return 0, errors.New("cannot take square root of a negative number")
+	}
+	return math.Sqrt(a), nil
+}
+
+func TestSqrt(t *testing.T) {
+	t.Parallel()
+	testCases := []struct {
+		input, want, tolerance float64
+	}{
+		{input: 4, want: 2, tolerance: 0.0001},   // sqrt(4) = 2
+		{input: 9, want: 3, tolerance: 0.0001},   // sqrt(9) = 3
+		{input: 2, want: 1.414, tolerance: 0.01}, // sqrt(2) ≈ 1.414
+	}
+
+	for _, tc := range testCases {
+		got, err := Sqrt(tc.input)
+		if err != nil {
+			t.Fatalf("Sqrt(%f) returned error: %v", tc.input, err)
+		}
+		if !closeEnough(got, tc.want, tc.tolerance) {
+			t.Errorf("Sqrt(%f) = %f, want %f (tolerance %f)",
+				tc.input, got, tc.want, tc.tolerance)
+		}
 	}
 }
