@@ -102,13 +102,6 @@ func TestDivideInvalid(t *testing.T) {
 	}
 }
 
-func Sqrt(a float64) (float64, error) {
-	if a < 0 {
-		return 0, errors.New("cannot take square root of a negative number")
-	}
-	return math.Sqrt(a), nil
-}
-
 func TestSqrt(t *testing.T) {
 	t.Parallel()
 	testCases := []struct {
