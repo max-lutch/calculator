@@ -94,6 +94,14 @@ func TestDivide(t *testing.T) {
 	}
 }
 
+// Function sqrt takes one number and returns it's square root or error if invalid input (<0)
+func Sqrt(a float64) (float64, error) {
+	if a < 0 {
+		return 0, errors.New("cannot take square root of a negative number")
+	}
+	return math.Sqrt(a), nil
+}
+
 func TestDivideInvalid(t *testing.T) {
 	t.Parallel()
 	_, err := calculator.Divide(1, 0)
