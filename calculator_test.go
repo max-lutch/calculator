@@ -1,7 +1,7 @@
 package calculator_test
 
 import (
-	"calculator" // This should match the folder name where calculator.go is located
+	"calculator" // This should match the folder name where calculator.go is loc
 	"errors"
 	"math"
 	"testing"
